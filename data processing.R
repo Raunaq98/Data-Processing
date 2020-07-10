@@ -126,3 +126,8 @@ data$zipGroups2 <- cut2(data$zipCode, g=4)
 table(data$zipGroups2)
 # [-21226,21205) [ 21205,21220) [ 21220,21227) [ 21227,21287] 
 #     338            375            300            314 
+
+
+######### Renaming Columns
+data2<- data
+data2<- rename(data2, Zip_Codes=zipCode, Restaurant_names = name)
