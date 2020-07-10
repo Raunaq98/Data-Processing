@@ -91,3 +91,38 @@ data_cross_tab <- xtabs(zipCode~ neighborhood + councilDistrict, data )
 
 # zipcodes was distributed between neighbourhood and councildistrict
 
+
+########## creating new variables
+
+
+data$nearME <- data$neighborhood %in% c("Roland Park","Homeland")
+table(data$nearME)
+# FALSE  TRUE 
+# 1314    13 
+
+data$wrongzipcode <- ifelse(data$zipCode<0,TRUE,FALSE)
+summary(data$wrongzipcode)
+#   Mode     FALSE    TRUE 
+# logical    1326       1 
+
+#hence, one zipcode is wrong
+
+
+########## cutting data
+# now assume we want to break the ziocdes based on their quantiles
+# quantiles in r represent 0,25,50,75, and 100th percentile
+
+data$zipGroups<- cut(data$zipCode, breaks=quantile(data$zipCode))
+table(data$zipGroups)
+#(-2.123e+04,2.12e+04]  (2.12e+04,2.122e+04] (2.122e+04,2.123e+04] (2.123e+04,2.129e+04] 
+#      337                   375                   282                   332 
+#   0 - 25                 25-50                  50-75                75-100
+
+
+# OR we can use this you want specific number of data cuts
+
+library(Hmisc)
+data$zipGroups2 <- cut2(data$zipCode, g=4)
+table(data$zipGroups2)
+# [-21226,21205) [ 21205,21220) [ 21220,21227) [ 21227,21287] 
+#     338            375            300            314 
