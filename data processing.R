@@ -131,3 +131,9 @@ table(data$zipGroups2)
 ######### Renaming Columns
 data2<- data
 data2<- rename(data2, Zip_Codes=zipCode, Restaurant_names = name)
+
+######### Grouping
+
+data3<- data2
+data3<- mutate(data3,closefar = factor(1*(councilDistrict <5),labels=c("close","far")))
+far_or_not <- group_by(data3,closefar)
